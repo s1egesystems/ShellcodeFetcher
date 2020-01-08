@@ -27,9 +27,6 @@ int main()
 	messagebox();
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
-	int lineCount = 0;
-	int rowCount = 0;
-	locale local;
 	char buf[8192];
 	int bytesReceived;
 	string response;
