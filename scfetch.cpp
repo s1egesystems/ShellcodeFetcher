@@ -60,7 +60,7 @@ int main()
 	unsigned char shellcode[8192];
 	for (int i = 0; i < shellcode_str.size() / 4; ++i)
 	{
-		shellcode[i] = std::strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
+		shellcode[i] = strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
 	}
 
 	// allocate memory and execute shellcode in memory
