@@ -1,6 +1,6 @@
 # ShellcodeFetcher
 
-Antivirus evasion technique (C++ program) to send GET request to remote server to fetch shellcode from HTTP response and inject/execute shellcode in memory.
+Antivirus evasion technique (C++ program) to send GET request to remote server, fetch shellcode from HTTP response and inject/execute shellcode in memory.
 
 DON'T UPLOAD TO VIRUSTOTAL
 
