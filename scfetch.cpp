@@ -49,7 +49,7 @@ int main()
 	// send HTTP GET request to server
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
-	// store http response
+	// receive and store http response
 	while ((bytesReceived = recv(sock, buf, 8192, 0)) > 0)
 	{
 		response += buf;
