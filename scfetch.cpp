@@ -8,9 +8,6 @@
 
 using namespace std;
 
-HINSTANCE hInst;
-WSADATA wsaData;
-
 int messagebox()
 {
 	int msgboxID = MessageBox(
@@ -25,6 +22,9 @@ int messagebox()
 int main()
 {
 	messagebox();
+
+
+	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
 	char buf[8192];
