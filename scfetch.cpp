@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <iostream> 
 
-#pragma comment(lib,"ws2_32.lib")
+#pragma comment(lib, "ws2_32.lib")
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 using namespace std;
@@ -38,7 +38,7 @@ int main()
 	// call message box function
 	messagebox();
 
-	// initialize winsock, create socket and hint structure
+	// initialize winsock, create socket and connect to server
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	struct hostent* host = gethostbyname(server.c_str());
