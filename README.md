@@ -2,8 +2,6 @@
 
 Antivirus (static analysis) evasion technique to send GET request to remote server, fetch shellcode from HTTP response and execute shellcode in memory, written in C++.
 
-DON'T UPLOAD TO VIRUSTOTAL
-
 Use https://antiscan.me to scan
 
 Fully undetectable (1/8/2020)
