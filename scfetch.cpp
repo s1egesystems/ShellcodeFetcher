@@ -1,7 +1,8 @@
 // Coded by s1ege greetz to all #GSH members.
 #include <winsock2.h>
 #include <windows.h>
-#include <iostream> 
+#include <string>
+//#include <iostream>
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "user32.lib")
