@@ -73,8 +73,10 @@ int main() {
 
 	messagebox();
 	while (true) {
-		if (fetch(server, path) == -1)
-		    continue;
+		if (fetch(server, path) == -1) {
+			Sleep(3000); 
+			continue;
+		}
 		Sleep(100000);
 	}
 	return 0;
