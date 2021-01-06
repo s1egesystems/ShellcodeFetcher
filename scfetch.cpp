@@ -17,7 +17,7 @@ int messagebox() {
 		"Error to throw off user. ",
 		"Error:",
 		MB_ICONEXCLAMATION | MB_OK
-	);215304215304
+	);
 	return msgboxID;
 }
 
