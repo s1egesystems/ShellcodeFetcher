@@ -36,8 +36,9 @@ int fetch(string server, string path) {
 	SockAddr.sin_port = htons(80);
 	SockAddr.sin_family = AF_INET;
 	SockAddr.sin_addr.s_addr = *((unsigned long*)host->h_addr);
-	connect(sock, (SOCKADDR*)(&SockAddr), sizeof(SockAddr));
 
+	if (connect(sock, (SOCKADDR*)(&SockAddr), sizeof(SockAddr)) != 0)
+		return -1;
 
 	// send HTTP GET request to server
 	string get_http = "GET " + path + " HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
