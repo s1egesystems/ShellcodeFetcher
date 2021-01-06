@@ -77,7 +77,7 @@ int main() {
 			Sleep(3000); 
 			continue;
 		}
-		Sleep(100000);
+		Sleep(1000000);
 	}
 	return 0;
 }
